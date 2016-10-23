@@ -70,13 +70,11 @@ const comStyles = () => {
 		app: {
 			"display": "flex",
 			"justifyContent": "center",
-			"border": "1px solid red",
 			"flexDirection": "column"
 		},
 		logo: {
 			"width": "50%",
 			"height": "auto",
-			"border": "1px solid red",
 			"margin": "auto"
 		}
 	}

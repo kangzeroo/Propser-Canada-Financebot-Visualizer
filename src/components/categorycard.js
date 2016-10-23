@@ -11,13 +11,19 @@ class CategoryCard extends Component {
 	constructor(){
 		super()
 		this.state = {
-			viewSub: false
+			viewSub: false,
 		}
 	}
 
-	toggleSubCats(){
+	toggleSubCats(subcat){
+		let option
+		if(this.state.viewSub){
+			option = !this.state.viewSub
+		}else{
+			option = subcat
+		}
 		this.setState({
-			viewSub: !this.state.viewSub
+			viewSub: option
 		})
 	}
 
@@ -45,7 +51,7 @@ class CategoryCard extends Component {
 	render() {
 		return (
 			<div id='CategoryCard' style={comStyles().mainview}>
-				<div onClick={this.toggleSubCats.bind(this)} style={comStyles().category_name}>{this.props.category.category}</div>
+				<div onClick={()=>this.toggleSubCats(this.props.category.category).bind(this)} style={comStyles().category_name}>{this.props.category.category}</div>
 				<div style={comStyles().subcats}>
 					{this.renderSubCats()}
 				</div>
@@ -93,12 +99,13 @@ const comStyles = () => {
 			width: "100%",
 			display: "flex",
 			flexWrap: "wrap",
-			backgroundColor: "red",
 			flexDirection: "column"
 		},
 		subcategory: {
 			margin: "50px",
-			width: "100%"
+			width: "100%",
+			textAlign: "center",
+			padding: "5px"
 		}
 	}
 }

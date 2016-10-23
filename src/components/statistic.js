@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import Radium from 'radium'
 import rd3 from 'rd3';
-//import Chart from 'chart.js'
 
 import { formatDataForChart } from '../api/content_manager'
 
@@ -38,15 +37,14 @@ class Statistic extends Component {
 
 	renderGraph(){
 		if(this.state.subcategory && this.props.selectedData){
-			const ctx = document.getElementById("chart")
-			// const formattedData = formatDataForChart(this.props.selectedData, "cumulative")
-			// const LineChart = new Chart(ctx, {
-			// 	type: "line",
-			// 	data: formattedData,
-			// 
-			// })
+			const LineChart = rd3.LineChart
+			const cumulative = formatDataForChart(this.props.selectedData, "cumulative")
+			const transactional = formatDataForChart(this.props.selectedData, "transactional")
 			return (
-				<div id='chart'></div>
+				<div>
+					<LineChart legend={true} data={cumulative} />
+					<LineChart legend={true} data={transactional} />
+				</div>
 			)
 		}
 	}
@@ -54,8 +52,7 @@ class Statistic extends Component {
 	render() {
 		return (
 			<div id='Statistic' style={comStyles().mainview}>
-				STATISTIC
-				{this.renderStatisticTitle()}
+				<div style={comStyles().title}>{this.renderStatisticTitle()}</div>
 				{this.renderGraph()}
 			</div>
 		)
@@ -85,7 +82,12 @@ export default connect(mapStateToProps)(RadiumHOC);
 const comStyles = () => {
 	return {
 		mainview: {
-			display: "flex"
+			display: "flex",
+			margin: "25px 0px 0px 0px"
+		},
+		title: {
+			width: "100%",
+			textAlign: "center"
 		}
 	}
 }

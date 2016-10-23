@@ -69,16 +69,14 @@ const comStyles = () => {
 	return {
 		mainview: {
 			display: "flex",
-      margin: "25px 0px 0px 0px",
+      margin: "25px 0px 25px 0px",
       justifyContent: "center",
       padding: "20px"
 		},
     name: {
-      border: "1px solid red",
-      textAlign: "center"
+      textAlign: "center",
     },
     catlist: {
-      border: "1px solid red",
       width: "100%",
       display: "flex",
       justifyContent: "center",
