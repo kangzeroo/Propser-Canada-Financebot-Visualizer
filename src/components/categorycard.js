@@ -30,6 +30,7 @@ class CategoryCard extends Component {
 	goToStatistic(subcat){
 		filterData(this.props.cachedData, subcat)
 			.then((data)=>{
+				console.log(data)
 				this.props.selectDataset(data)
 				browserHistory.push('/statistic?category='+this.props.category._id+"&subcategory="+subcat)
 			})

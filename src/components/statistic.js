@@ -19,7 +19,6 @@ class Statistic extends Component {
 		const selectedCat = this.props.categories.filter((cat)=>{
 			return cat._id == this.props.location.query.category
 		})[0]
-		console.log(selectedCat)
 		const thesubcat = selectedCat.subcategory.filter((subcat)=>{
 			return subcat == this.props.location.query.subcategory
 		})
@@ -29,21 +28,27 @@ class Statistic extends Component {
 		})
 	}
 
-	renderStatisticTitle(){
-			return (
-				<h2>{this.state.subcategory}</h2>
-			)
-	}
-
 	renderGraph(){
 		if(this.state.subcategory && this.props.selectedData){
-			const LineChart = rd3.LineChart
+			const AreaChart = rd3.AreaChart
 			const cumulative = formatDataForChart(this.props.selectedData, "cumulative")
 			const transactional = formatDataForChart(this.props.selectedData, "transactional")
 			return (
 				<div>
-					<LineChart legend={true} data={cumulative} />
-					<LineChart legend={true} data={transactional} />
+					<AreaChart
+						width="100%"
+						viewBoxObject={{
+							x: 0,
+							y: 0,
+							height: 400,
+							width: 500
+						}}
+						height={400}
+						title={this.state.subcategory}
+						xAxisLabel="Date"
+						yAxisLabel="Spending"
+						legend={true} data={cumulative} />
+					<AreaChart legend={true} data={transactional} />
 				</div>
 			)
 		}
@@ -52,7 +57,6 @@ class Statistic extends Component {
 	render() {
 		return (
 			<div id='Statistic' style={comStyles().mainview}>
-				<div style={comStyles().title}>{this.renderStatisticTitle()}</div>
 				{this.renderGraph()}
 			</div>
 		)
