@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import Radium from 'radium'
 import rd3 from 'rd3';
+import Chart from 'chart.js'
 
 import { formatDataForChart } from '../api/content_manager'
 
@@ -10,33 +11,42 @@ class Statistic extends Component {
 	constructor(){
 		super()
 		this.state = {
-			category: null
+			category: null,
+			subcategory: null
 		}
 	}
 
-	componentDidMount(){
+	componentWillMount(){
 		const selectedCat = this.props.categories.filter((cat)=>{
 			return cat._id == this.props.location.query.category
 		})[0]
+		console.log(selectedCat)
+		const thesubcat = selectedCat.subcategory.filter((subcat)=>{
+			return subcat == this.props.location.query.subcategory
+		})
 		this.setState({
-			category: selectedCat
+			category: selectedCat,
+			subcategory: thesubcat
 		})
 	}
 
 	renderStatisticTitle(){
-		if(this.state.category){
 			return (
-				<h2>{this.state.category.category_name}</h2>
+				<h2>{this.state.subcategory}</h2>
 			)
-		}
 	}
 
 	renderGraph(){
-		if(this.state.category && this.props.selectedData){
-			const LineChart = rd3.LineChart
-			const formattedData = formatDataForChart(this.props.selectedData)
+		if(this.state.subcategory && this.props.selectedData){
+			const ctx = document.getElementById("chart")
+			const formattedData = formatDataForChart(this.props.selectedData, "cumulative")
+			const LineChart = new Chart(ctx, {
+				type: "line",
+				data: formattedData,
+
+			})
 			return (
-				<LineChart legend={true} data={formattedData} />
+				<div id='chart'></div>
 			)
 		}
 	}

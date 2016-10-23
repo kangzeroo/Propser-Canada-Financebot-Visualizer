@@ -85,7 +85,6 @@ export function getUserCategories(userId){
 export function filterData(cachedData, subcat){
     const p = new Promise((res, rej)=>{
       const filtered = cachedData.filter((transaction)=>{
-        console.log(transaction.subcategory, subcat)
         if(transaction.subcategory){
           return transaction.subcategory.toLowerCase() == subcat.toLowerCase()
         }else{
@@ -98,12 +97,10 @@ export function filterData(cachedData, subcat){
     return p
 }
 
-export function formatDataForChart(data){
+export function formatDataForChart(data, type){
   let cumulative = {
     name: "Cumulative",
-    values: [],
-    strokeWidth: 3,
-    strokeDashArray: "5,5",
+    values: []
   }
   let transaction = {
     name: "Transaction",
@@ -124,7 +121,11 @@ export function formatDataForChart(data){
       y: trans.amount
     })
   })
-  return [cumulative, transaction]
+  if(type=='cumulative'){
+    return [cumulative]
+  }else{
+    return [transaction]
+  }
 }
 
 export function renderPieData(data){

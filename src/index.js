@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
 import App from './components/app';
-import List from './components/List';
+import List from './components/list';
 import Statistic from './components/statistic';
 import Summary from './components/summary'
 import reducers from './reducers';
