@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import Radium from 'radium'
 import rd3 from 'rd3';
-import Chart from 'chart.js'
+//import Chart from 'chart.js'
 
 import { formatDataForChart } from '../api/content_manager'
 
@@ -39,12 +39,12 @@ class Statistic extends Component {
 	renderGraph(){
 		if(this.state.subcategory && this.props.selectedData){
 			const ctx = document.getElementById("chart")
-			const formattedData = formatDataForChart(this.props.selectedData, "cumulative")
-			const LineChart = new Chart(ctx, {
-				type: "line",
-				data: formattedData,
-
-			})
+			// const formattedData = formatDataForChart(this.props.selectedData, "cumulative")
+			// const LineChart = new Chart(ctx, {
+			// 	type: "line",
+			// 	data: formattedData,
+			// 
+			// })
 			return (
 				<div id='chart'></div>
 			)
