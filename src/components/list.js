@@ -26,7 +26,7 @@ class List extends Component {
   renderList(){
     return (
       <div>
-        <h2>{this.props.userId}</h2>
+        <h2 style={comStyles().name}>{/*this.props.userId*/}Siddhanth Unnithan</h2>
         <div style={comStyles().catlist}>
           {this.props.categories.map(this.renderCategories)}
         </div>
@@ -68,7 +68,21 @@ export default connect(mapStateToProps, {saveCategoriesToState})(RadiumHOC);
 const comStyles = () => {
 	return {
 		mainview: {
-			display: "flex"
-		}
+			display: "flex",
+      margin: "25px 0px 0px 0px",
+      justifyContent: "center",
+      padding: "20px"
+		},
+    name: {
+      border: "1px solid red",
+      textAlign: "center"
+    },
+    catlist: {
+      border: "1px solid red",
+      width: "100%",
+      display: "flex",
+      justifyContent: "center",
+      flexWrap: "wrap"
+    }
 	}
 }

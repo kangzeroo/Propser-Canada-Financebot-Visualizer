@@ -31,7 +31,7 @@ class CategoryCard extends Component {
 
 	renderSubCats(){
 		if(this.state.viewSub){
-			const subcats = this.props.category.subcategories.map((subcat)=>{
+			const subcats = this.props.category.subcategory.map((subcat)=>{
 				return (
 					<div onClick={()=>this.goToStatistic(subcat)} key={subcat} >
 						{subcat}
@@ -45,8 +45,10 @@ class CategoryCard extends Component {
 	render() {
 		return (
 			<div id='CategoryCard' style={comStyles().mainview}>
-				<div onClick={this.toggleSubCats.bind(this)} style={comStyles().category_name}>{this.props.category.category_name}</div>
-				{this.renderSubCats()}
+				<div onClick={this.toggleSubCats.bind(this)} style={comStyles().category_name}>{this.props.category.category}</div>
+				<div style={comStyles().subcats}>
+					{this.renderSubCats()}
+				</div>
 			</div>
 		)
 	}
@@ -74,13 +76,29 @@ export default connect(mapStateToProps, {selectDataset})(RadiumHOC);
 const comStyles = () => {
 	return {
 		mainview: {
-			display: "flex"
+			display: "flex",
+			border: "3px solid black",
+			borderRadius: "5px",
+			margin: "10px",
+			padding: "10px",
+			width: "300px",
+			flexDirection: "column"
 		},
 		category_name: {
-
+			textAlign: "center",
+			fontWeight: "bold",
+			width: "100%",
+		},
+		subcats: {
+			width: "100%",
+			display: "flex",
+			flexWrap: "wrap",
+			backgroundColor: "red",
+			flexDirection: "column"
 		},
 		subcategory: {
-
+			margin: "50px",
+			width: "100%"
 		}
 	}
 }

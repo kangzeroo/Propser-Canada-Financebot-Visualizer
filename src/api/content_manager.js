@@ -1,8 +1,8 @@
 import axios from 'axios'
 import lodash from 'lodash'
 
-//const API_URL = "https://prosper-canada.herokuapp.com"
-const API_URL = "http://localhost:5000"
+const API_URL = "https://prosper-canada.herokuapp.com"
+//const API_URL = "http://localhost:5000"
 
 export function urlParamsExtractor(query){
   const p = new Promise((res, rej)=>{
@@ -85,7 +85,12 @@ export function getUserCategories(userId){
 export function filterData(cachedData, subcat){
     const p = new Promise((res, rej)=>{
       const filtered = cachedData.filter((transaction)=>{
-        return transaction.subcategory == subcat
+        console.log(transaction.subcategory, subcat)
+        if(transaction.subcategory){
+          return transaction.subcategory.toLowerCase() == subcat.toLowerCase()
+        }else{
+          return false
+        }
       })
       console.log(filtered)
       res(filtered)
@@ -94,7 +99,6 @@ export function filterData(cachedData, subcat){
 }
 
 export function formatDataForChart(data){
-  console.log(data)
   let cumulative = {
     name: "Cumulative",
     values: [],
@@ -109,13 +113,14 @@ export function formatDataForChart(data){
   let cumulativeAmount = 0
   data.forEach((trans)=>{
     let transDate = new Date(trans.date)
+    let unixDate = transDate.getTime()/1000
     cumulativeAmount += trans.amount
     cumulative.values.push({
-      x: transDate.getTime()/1000,
+      x: unixDate,
       y:cumulativeAmount
     })
     transaction.values.push({
-      x: transDate.getTime()/1000,
+      x: unixDate,
       y: trans.amount
     })
   })

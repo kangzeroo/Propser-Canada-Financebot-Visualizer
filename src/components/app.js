@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux';
 import Radium from 'radium'
+import { browserHistory } from 'react-router'
 
 import Header from './header'
 
@@ -24,10 +25,19 @@ export class App extends Component {
 			})
 	}
 
+	renderBack(){
+		if(this.props.selectedData){
+			const back = '/list?userId=' + this.props.userId
+			return (
+				 	<img src='../../res/images/ProsperCanada.jpg' style={comStyles().logo} onClick={()=>browserHistory.push(back)} />
+			)
+		}
+	}
+
   render() {
     return (
-      <div>
-				<Header />
+      <div style={comStyles().app}>
+				{this.renderBack()}
         {this.props.children}
       </div>
     );
@@ -36,7 +46,8 @@ export class App extends Component {
 
 App.propTypes = {
 	params: React.PropTypes.object.isRequired,
-	userId: React.PropTypes.string.isRequired
+	userId: React.PropTypes.string.isRequired,
+	selectedData: React.PropTypes.array.isRequired
 }
 
 const RadiumHOC = Radium(App);
@@ -44,7 +55,8 @@ const RadiumHOC = Radium(App);
 function mapStateToProps(state){
 	return {
 		params: state.user.params,
-		userId: state.user.userId
+		userId: state.user.userId,
+		selectedData: state.content.selectedData
 	}
 }
 
@@ -55,6 +67,17 @@ export default connect(mapStateToProps, {cacheDataToState, saveParamsToState})(R
 
 const comStyles = () => {
 	return {
-
+		app: {
+			"display": "flex",
+			"justifyContent": "center",
+			"border": "1px solid red",
+			"flexDirection": "column"
+		},
+		logo: {
+			"width": "50%",
+			"height": "auto",
+			"border": "1px solid red",
+			"margin": "auto"
+		}
 	}
 }
