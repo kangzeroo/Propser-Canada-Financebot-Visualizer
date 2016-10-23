@@ -2,8 +2,7 @@ import { CACHE_DATA, SELECT_DATASET } from '../actions/action_types'
 
 const INITIAL_STATE = {
   cachedData: [],
-	selectedData: [],
-  user: null
+	selectedData: []
 }
 
 export default function(state = INITIAL_STATE, action){

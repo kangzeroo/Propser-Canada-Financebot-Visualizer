@@ -28,8 +28,10 @@
   "dependencies": {
     "axios": "^0.15.2",
     "babel-preset-stage-1": "^6.1.18",
+    "d3": "^3.5.17",
     "lodash": "^3.10.1",
     "radium": "^0.18.1",
+    "rd3": "^0.7.2",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
     "react-redux": "^4.0.0",

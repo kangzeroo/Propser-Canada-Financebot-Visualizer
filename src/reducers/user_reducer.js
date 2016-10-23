@@ -1,13 +1,11 @@
 
-import { SAVE_PARAMS } from '../actions/action_types'
+import { SAVE_PARAMS, SAVE_CATEGORIES } from '../actions/action_types'
 
 const INITIAL_STATE = {
   params: null,
   userId: null,
-  category: null,
-  subcategory: null,
-  startdate: null,
-  enddate: null
+  user: null,
+  categories: []
 }
 
 export default function(state = INITIAL_STATE, action){
@@ -16,12 +14,14 @@ export default function(state = INITIAL_STATE, action){
 			return {
 				...state,
 				params: action.payload,
-        userId: action.payload.userId,
-        category: action.payload.category,
-        subcategory: action.payload.subcategory,
-        startdate: action.payload.startdate,
-        enddate: action.payload.enddate
+        userId: action.payload.userId
 			}
+    case SAVE_CATEGORIES:
+      return {
+        ...state,
+        user: action.payload,
+        categories: action.payload.categories
+      }
 	}
 	return state;
 }

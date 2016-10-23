@@ -1,4 +1,5 @@
 import axios from 'axios'
+import lodash from 'lodash'
 
 //const API_URL = "https://prosper-canada.herokuapp.com"
 const API_URL = "http://localhost:5000"
@@ -38,7 +39,7 @@ export function getDataFromDb(userId, config){
         subcategoryId: String         // optional
       }
   */
-
+  console.log(config)
   const p = new Promise((res, rej)=>{
     const url = urlGenerator(config)
     axios.get(url)
@@ -53,7 +54,7 @@ export function getDataFromDb(userId, config){
 }
 
 function urlGenerator(config){
-  let url = API_URL + "/users?userId="+config.userId
+  let url = API_URL + "/transactions?userId="+config.userId
   if(config.category){
     url = url + "&category=" + config.category
   }
@@ -67,4 +68,72 @@ function urlGenerator(config){
     url = url + "&enddate=" + config.enddate
   }
   return url
+}
+
+
+export function getUserCategories(userId){
+  const p = new Promise((res, rej)=>{
+    axios.get(API_URL+"/users/"+userId)
+      .then((response, err)=>{
+        if(err){rej(err)}
+        res(response.data)
+      })
+  })
+  return p
+}
+
+export function filterData(cachedData, subcat){
+    const p = new Promise((res, rej)=>{
+      const filtered = cachedData.filter((transaction)=>{
+        return transaction.subcategory == subcat
+      })
+      console.log(filtered)
+      res(filtered)
+    })
+    return p
+}
+
+export function formatDataForChart(data){
+  console.log(data)
+  let cumulative = {
+    name: "Cumulative",
+    values: [],
+    strokeWidth: 3,
+    strokeDashArray: "5,5",
+  }
+  let transaction = {
+    name: "Transaction",
+    values: [],
+    strokeWidth: 3,
+  }
+  let cumulativeAmount = 0
+  data.forEach((trans)=>{
+    let transDate = new Date(trans.date)
+    cumulativeAmount += trans.amount
+    cumulative.values.push({
+      x: transDate.getTime()/1000,
+      y:cumulativeAmount
+    })
+    transaction.values.push({
+      x: transDate.getTime()/1000,
+      y: trans.amount
+    })
+  })
+  return [cumulative, transaction]
+}
+
+export function renderPieData(data){
+  const uniqueCats = data.reduce((prev, curr, index)=>{
+    // filter for only unique categories
+  })
+  console.log(uniqueCats)
+  data.forEach((data)=>{
+    for(let i = 0; i<uniqueCats.length; i++){
+      if(uniqueCats[i].label == data.category){
+        uniqueCats[i].value += data.amount
+        break
+      }
+    }
+  })
+  return uniqueCats
 }
